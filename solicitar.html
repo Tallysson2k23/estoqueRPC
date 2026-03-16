@@ -1,21 +1,137 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-  <title>Solicitar Equipamento</title>
+<meta charset="UTF-8">
+<title>Solicitar Equipamento</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: linear-gradient(135deg,#1e3c72,#2a5298);
+}
+
+/* CARD */
+
+.container{
+  background:white;
+  padding:40px;
+  width:420px;
+  border-radius:12px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+h2{
+  text-align:center;
+  margin-bottom:25px;
+  color:#333;
+}
+
+/* SELECT */
+
+select{
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:15px;
+  margin-bottom:25px;
+}
+
+select:focus{
+  outline:none;
+  border-color:#2a5298;
+  box-shadow:0 0 5px rgba(42,82,152,0.3);
+}
+
+/* BOTÕES */
+
+.botoes{
+  display:flex;
+  gap:10px;
+}
+
+button{
+  flex:1;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  color:white;
+  font-size:15px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+/* solicitar */
+
+#btnSolicitar{
+  background:#2a5298;
+}
+
+#btnSolicitar:hover{
+  background:#1e3c72;
+}
+
+/* devolver */
+
+#btnDevolver{
+  background:#27ae60;
+}
+
+#btnDevolver:hover{
+  background:#1f8a4d;
+}
+
+.footer{
+  margin-top:25px;
+  text-align:center;
+  font-size:12px;
+  color:#888;
+}
+
+</style>
+
 </head>
+
 <body>
+
+<div class="container">
 
 <h2>Solicitação de Equipamento</h2>
 
 <select id="equipamento">
-  <option value="Máquina de Fusão">Máquina de Fusão</option>
-  <option value="OTDR">OTDR</option>
-  <option value="Power Meter">Power Meter</option>
+<option value="Máquina de Fusão">Máquina de Fusão</option>
+<option value="OTDR">OTDR</option>
+<option value="Power Meter">Power Meter</option>
 </select>
 
-<br><br>
+<div class="botoes">
 
-<button id="btnSolicitar">Solicitar</button>
+<button id="btnSolicitar">
+📤 Solicitar
+</button>
+
+<button id="btnDevolver">
+📥 Devolver
+</button>
+
+</div>
+
+<div class="footer">
+Sistema de Controle de Equipamentos
+</div>
+
+</div>
 
 <script type="module" src="js/solicitar.js"></script>
 
