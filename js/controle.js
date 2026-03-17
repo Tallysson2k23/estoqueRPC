@@ -1,6 +1,12 @@
 import { auth, db } from "../firebase-config.js";
-import { collection, query, orderBy, onSnapshot } 
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+import { 
+  collection, 
+  query, 
+  orderBy, 
+  onSnapshot 
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
 import { onAuthStateChanged } 
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
@@ -26,12 +32,37 @@ onAuthStateChanged(auth, (user) => {
 
       const dados = doc.data();
 
+      let dataSolicitacao = "";
+      let dataDevolucao = "";
+      let statusFormatado = "";
+
+      if (dados.dataHoraSolicitacao) {
+        dataSolicitacao = dados.dataHoraSolicitacao
+          .toDate()
+          .toLocaleString();
+      }
+
+      if (dados.dataHoraDevolucao) {
+        dataDevolucao = dados.dataHoraDevolucao
+          .toDate()
+          .toLocaleString();
+      }
+
+      if (dados.status === "solicitado") {
+        statusFormatado = "🟢 Em uso";
+      }
+
+      if (dados.status === "devolvido") {
+        statusFormatado = "🔵 Devolvido";
+      }
+
       const linha = `
         <tr>
           <td>${dados.usuario}</td>
           <td>${dados.equipamento}</td>
-          <td>${dados.dataHoraSolicitacao ? dados.dataHoraSolicitacao.toDate().toLocaleString() : ""}</td>
-          <td>${dados.status}</td>
+          <td>${dataSolicitacao}</td>
+          <td>${dataDevolucao}</td>
+          <td>${statusFormatado}</td>
         </tr>
       `;
 

@@ -1,18 +1,107 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-  <title>Login - Ferramentas</title>
+<meta charset="UTF-8">
+<title>Login - Ferramentas</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: linear-gradient(135deg,#1e3c72,#2a5298);
+}
+
+.container{
+  background:white;
+  padding:40px;
+  width:350px;
+  border-radius:12px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  text-align:center;
+}
+
+h2{
+  margin-bottom:10px;
+  color:#333;
+}
+
+.info{
+  font-size:14px;
+  color:#666;
+  margin-bottom:25px;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin-bottom:15px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:14px;
+  transition:0.2s;
+}
+
+input:focus{
+  outline:none;
+  border-color:#2a5298;
+  box-shadow:0 0 5px rgba(42,82,152,0.3);
+}
+
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background:#2a5298;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+button:hover{
+  background:#1e3c72;
+}
+
+.footer{
+  margin-top:20px;
+  font-size:12px;
+  color:#999;
+}
+</style>
+
 </head>
+
 <body>
+
+<div class="container">
 
 <h2>Login</h2>
 
-<input type="email" id="email" placeholder="Email">
-<br><br>
-<input type="password" id="senha" placeholder="Senha">
-<br><br>
+<p class="info">
+Use o mesmo login utilizado para solicitar veículos!.
+</p>
+
+<input type="email" id="email" placeholder="Digite seu email">
+
+<input type="password" id="senha" placeholder="Digite sua senha">
 
 <button id="btnLogin">Entrar</button>
+
+<div class="footer">
+Sistema de Ferramentas
+</div>
+
+</div>
 
 <script type="module" src="auth.js"></script>
 
