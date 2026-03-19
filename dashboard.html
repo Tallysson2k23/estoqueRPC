@@ -17,8 +17,6 @@ body{
   background: linear-gradient(135deg,#1e3c72,#2a5298);
 }
 
-/* topo */
-
 .header{
   background:white;
   padding:20px;
@@ -45,7 +43,19 @@ body{
   background:#c0392b;
 }
 
-/* conteúdo */
+/* ALERTA */
+.alerta{
+  width:90%;
+  max-width:900px;
+  margin:20px auto;
+  background:#f39c12;
+  color:white;
+  padding:15px;
+  border-radius:10px;
+  text-align:center;
+  font-weight:bold;
+  display:none;
+}
 
 .container{
   padding:40px;
@@ -83,7 +93,6 @@ body{
   font-size:40px;
 }
 </style>
-
 </head>
 
 <body>
@@ -93,37 +102,93 @@ body{
   <button class="logout" onclick="logout()">Sair</button>
 </div>
 
+<!-- 🔥 ALERTA -->
+<div id="alerta" class="alerta"></div>
+
 <div class="container">
+  <div class="cards">
 
-<div class="cards">
+    <a class="card" href="solicitar.html">
+      <div class="icon">🧰</div>
+      <h3>Solicitar e Devolução Equipamento</h3>
+      <p>....................</p>
+    </a>
 
-<a class="card" href="solicitar.html">
-<div class="icon">🧰</div>
-<h3>Solicitar e Devolução Equipamento</h3>
-<p>....................</p>
-</a>
+    <a class="card" href="controle.html">
+      <div class="icon">📋</div>
+      <h3>Controle</h3>
+      <p>....................</p>
+    </a>
 
-<a class="card" href="controle.html">
-<div class="icon">📋</div>
-<h3>Controle</h3>
-<p>....................</p>
-</a>
-
+  </div>
 </div>
 
-</div>
+<!-- 🔥 SCRIPT MODERNO (V10) -->
+<script type="module">
 
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+import { auth, db } from "./firebase-config.js";
 
-<script src="firebase-config.js"></script>
+import { 
+  collection,
+  query,
+  where,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-<script>
-function logout() {
-  firebase.auth().signOut().then(() => {
+import { onAuthStateChanged, signOut } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+// logout correto
+window.logout = function() {
+  signOut(auth).then(() => {
     window.location.href = "login.html";
   });
-}
+};
+
+// verifica usuário e busca pendências
+onAuthStateChanged(auth, async (user) => {
+
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  try {
+
+    const q = query(
+      collection(db, "solicitacoes_ferramentas"),
+      where("uid", "==", user.uid),
+      where("status", "==", "solicitado")
+    );
+
+    const snapshot = await getDocs(q);
+
+    const alerta = document.getElementById("alerta");
+
+    if (!snapshot.empty) {
+
+      let equipamentos = [];
+
+      snapshot.forEach(doc => {
+        const dados = doc.data();
+        equipamentos.push(dados.equipamento);
+      });
+
+      alerta.style.display = "block";
+      alerta.innerText =
+        "⚠️ Você possui equipamento(s) aguardando devolução: " +
+        equipamentos.join(", ");
+
+    } else {
+      alerta.style.display = "none";
+    }
+
+  } catch (error) {
+    console.error("Erro ao buscar dados:", error);
+  }
+
+});
+
 </script>
 
 </body>
