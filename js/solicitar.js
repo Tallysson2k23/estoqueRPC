@@ -149,7 +149,7 @@ async function atualizarStatusCards() {
 
   cards.forEach(card => {
 
-    const nome = card.querySelector(".nome").innerText;
+    const nome = card.dataset.equip;
     const statusDiv = card.querySelector(".status");
 
     if (!statusDiv) return; // 🔥 evita erro
