@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Dashboard</title>
+<title>Login - Ferramentas</title>
 
 <style>
 *{
@@ -13,82 +13,69 @@
 }
 
 body{
-  min-height:100vh;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   background: linear-gradient(135deg,#1e3c72,#2a5298);
 }
 
-/* topo */
-.header{
-  background:white;
-  padding:20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  box-shadow:0 5px 15px rgba(0,0,0,0.1);
-}
-
-.header h2{
-  color:#333;
-}
-
-.logout{
-  padding:8px 16px;
-  border:none;
-  border-radius:6px;
-  background:#e74c3c;
-  color:white;
-  cursor:pointer;
-}
-
-.logout:hover{
-  background:#c0392b;
-}
-
-/* alerta */
-.alerta{
-  background:#f39c12;
-  color:white;
-  padding:15px;
-  text-align:center;
-  font-weight:bold;
-  display:none;
-}
-
-/* conteúdo */
 .container{
-  padding:40px;
-  display:flex;
-  justify-content:center;
-}
-
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:25px;
-  width:700px;
-}
-
-.card{
   background:white;
-  padding:30px;
+  padding:40px;
+  width:350px;
   border-radius:12px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
   text-align:center;
-  box-shadow:0 10px 25px rgba(0,0,0,0.15);
-  transition:0.2s;
-  text-decoration:none;
+}
+
+h2{
+  margin-bottom:10px;
   color:#333;
 }
 
-.card:hover{
-  transform:translateY(-5px);
+.info{
+  font-size:14px;
+  color:#666;
+  margin-bottom:25px;
 }
 
-.card h3{
-  margin-top:10px;
+input{
+  width:100%;
+  padding:12px;
+  margin-bottom:15px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:14px;
+  transition:0.2s;
 }
 
-.icon{
-  font-size:40px;
+input:focus{
+  outline:none;
+  border-color:#2a5298;
+  box-shadow:0 0 5px rgba(42,82,152,0.3);
+}
+
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background:#2a5298;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+button:hover{
+  background:#1e3c72;
+}
+
+.footer{
+  margin-top:20px;
+  font-size:12px;
+  color:#999;
 }
 </style>
 
@@ -96,86 +83,31 @@ body{
 
 <body>
 
-<div class="header">
-  <h2>Sistema de Solicitação de Ferramentas</h2>
-  <button class="logout" onclick="logout()">Sair</button>
-</div>
-
-<!-- ALERTA -->
-<div id="alerta" class="alerta"></div>
-
 <div class="container">
 
-<div class="cards">
+<h2>Login</h2>
 
-<a class="card" href="solicitar.html">
-<div class="icon">🧰</div>
-<h3>Solicitar e Devolução Equipamento</h3>
-<p>....................</p>
-</a>
+<p class="info">
+Use o mesmo login utilizado para solicitar veículos!.
+</p>
 
-<a class="card" href="controle.html">
-<div class="icon">📋</div>
-<h3>Controle</h3>
-<p>....................</p>
-</a>
+<form id="formLogin">
 
+<input type="email" id="email" placeholder="Digite seu email">
+
+<input type="password" id="senha" placeholder="Digite sua senha">
+
+<button id="btnLogin">Entrar</button>
+
+</form>
+
+<div class="footer">
+Sistema de Ferramentas
 </div>
 
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-
-<script src="firebase-config.js"></script>
-
-<script>
-
-// logout
-function logout() {
-  firebase.auth().signOut().then(() => {
-    window.location.href = "login.html";
-  });
-}
-
-// VERIFICAÇÃO AUTOMÁTICA
-firebase.auth().onAuthStateChanged(user => {
-  if(user){
-
-    const db = firebase.firestore();
-
-    db.collection("solicitacoes")
-      .where("usuarioId", "==", user.uid)
-      .where("status", "==", "pendente")
-      .get()
-      .then(snapshot => {
-
-        if(!snapshot.empty){
-
-          let ferramentas = [];
-
-          snapshot.forEach(doc => {
-            ferramentas.push(doc.data().ferramenta);
-          });
-
-          const alerta = document.getElementById("alerta");
-
-          alerta.style.display = "block";
-          alerta.innerText =
-            "⚠️ Você possui ferramentas aguardando devolução: " +
-            ferramentas.join(", ");
-
-        }
-
-      });
-
-  } else {
-    window.location.href = "login.html";
-  }
-});
-
-</script>
+<script type="module" src="auth.js"></script>
 
 </body>
 </html>

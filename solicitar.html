@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Solicitar Equipamento</title>
+<title>Equipamentos</title>
 
 <style>
 
@@ -14,89 +14,89 @@
 }
 
 body{
-  height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  min-height:100vh;
+  padding:30px;
   background: linear-gradient(135deg,#1e3c72,#2a5298);
 }
 
-/* CARD */
-
-.container{
-  background:white;
-  padding:40px;
-  width:420px;
-  border-radius:12px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.2);
-}
+/* TÍTULO */
 
 h2{
   text-align:center;
-  margin-bottom:25px;
-  color:#333;
+  color:white;
+  margin-bottom:30px;
 }
 
-/* SELECT */
+/* GRID */
 
-select{
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+}
+
+/* CARD PRODUTO */
+
+.card{
+  background:white;
+  border-radius:12px;
+  padding:15px;
+  text-align:center;
+  box-shadow:0 10px 20px rgba(0,0,0,0.2);
+  transition:0.2s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+}
+
+/* IMAGEM */
+
+.card img{
   width:100%;
-  padding:12px;
+  height:140px;
+  object-fit:cover;
   border-radius:8px;
-  border:1px solid #ccc;
-  font-size:15px;
-  margin-bottom:25px;
 }
 
-select:focus{
-  outline:none;
-  border-color:#2a5298;
-  box-shadow:0 0 5px rgba(42,82,152,0.3);
+/* NOME */
+
+.nome{
+  margin:10px 0;
+  font-weight:bold;
+  color:#333;
 }
 
 /* BOTÕES */
 
 .botoes{
   display:flex;
-  gap:10px;
+  gap:8px;
 }
 
 button{
   flex:1;
-  padding:12px;
+  padding:8px;
   border:none;
-  border-radius:8px;
+  border-radius:6px;
   color:white;
-  font-size:15px;
   cursor:pointer;
-  transition:0.2s;
 }
 
-/* solicitar */
-
-#btnSolicitar{
+.solicitar{
   background:#2a5298;
 }
 
-#btnSolicitar:hover{
+.solicitar:hover{
   background:#1e3c72;
 }
 
-/* devolver */
-
-#btnDevolver{
+.devolver{
   background:#27ae60;
 }
 
-#btnDevolver:hover{
+.devolver:hover{
   background:#1f8a4d;
-}
-
-.footer{
-  margin-top:25px;
-  text-align:center;
-  font-size:12px;
-  color:#888;
 }
 
 </style>
@@ -105,39 +105,109 @@ button{
 
 <body>
 
-<div class="container">
+<h2>Equipamentos</h2>
 
-<h2>Solicitação de Equipamento</h2>
+<div class="grid">
 
-<select id="equipamento">
-
-  <option value="Maquina de fusão (amarela)">Maquina de fusão (amarela)</option>
-  <option value="Maquina de fusão (laranja)">Maquina de fusão (laranja)</option>
-  <option value="Caixa Azul">Caixa Azul</option>
-  <option value="OTDR 1 ( Bolsa )">OTDR 1 ( Bolsa )</option>
-  <option value="OTDR 2 ( Azul )">OTDR 2 ( Azul )</option>
-  <option value="OTDR 3 ( Roxo )">OTDR 3 ( Roxo )</option>
-  <option value="Furadeira">Furadeira</option>
-  <option value="Martelete ( Cabo )">Martelete ( Cabo )</option>
-  <option value="Martelete ( Bateria )">Martelete ( Bateria )</option>
-  <option value="Power Meter Pon">Power Meter Pon</option>
-
-</select>
-
+<!-- ITEM 1 -->
+<div class="card">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQR5uFPXS5Cl8lVojJTA62C6P3RIw7lN-kkRQ&s" alt="">
+<div class="nome">Máquina de Fusão (Amarela)</div>
 <div class="botoes">
-
-<button id="btnSolicitar">
-📤 Solicitar
-</button>
-
-<button id="btnDevolver">
-📥 Devolver
-</button>
-
+<button class="solicitar" data-equip="Maquina de fusão (amarela)">Solicitar</button>
+<button class="devolver" data-equip="Maquina de fusão (amarela)">Devolver</button>
+</div>
 </div>
 
-<div class="footer">
-Sistema de Controle de Equipamentos
+<!-- ITEM 2 -->
+<div class="card">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbfSvv5-p0xqjrlHZwKXc6DrIBtYU6Xk_dNw&s" alt="">
+<div class="nome">Máquina de Fusão (Laranja)</div>
+<div class="botoes">
+<button class="solicitar" data-equip="OTDR 1 ( Bolsa )">Solicitar</button>
+<button class="devolver" data-equip="OTDR 1 ( Bolsa )">Devolver</button>
+</div>
+</div>
+
+<!-- ITEM 3 -->
+<div class="card">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvKiONV9nW0q0orp4cHPalm5JVVijVvwLAkg&s" alt="">
+<div class="nome">OTDR 1 (Bolsa)</div>
+<div class="botoes">
+<button class="solicitar" data-equip="OTDR 1 ( Bolsa )">Solicitar</button>
+<button class="devolver" data-equip="OTDR 1 ( Bolsa )">Devolver</button>
+</div>
+</div>
+
+<!-- ITEM 4 -->
+<div class="card">
+<img src="https://http2.mlstatic.com/D_NQ_NP_803935-CBT106147287188_022026-O.webp" alt="">
+<div class="nome">OTDR 2 (Azul)</div>
+<div class="botoes">
+<button class="solicitar" data-equip="OTDR 1 ( Bolsa )">Solicitar</button>
+<button class="devolver" data-equip="OTDR 1 ( Bolsa )">Devolver</button>
+</div>
+</div>
+
+<!-- ITEM 5 -->
+<div class="card">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR79VBUeIbrVqGuAwnKl0KuybSL-9ZCAdP_Kw&s" alt="">
+<div class="nome">OTDR 3 (Roxo)</div>
+<div class="botoes">
+<button class="solicitar" data-equip="OTDR 1 ( Bolsa )">Solicitar</button>
+<button class="devolver" data-equip="OTDR 1 ( Bolsa )">Devolver</button>
+</div>
+</div>
+
+<!-- ITEM 6 -->
+<div class="card">
+<img src="https://m.media-amazon.com/images/I/51oo60qZZYL._AC_UF894,1000_QL80_.jpg" alt="">
+<div class="nome">Furadeira</div>
+<div class="botoes">
+<button class="solicitar" data-equip="OTDR 1 ( Bolsa )">Solicitar</button>
+<button class="devolver" data-equip="OTDR 1 ( Bolsa )">Devolver</button>
+</div>
+</div>
+
+<!-- ITEM 7 -->
+<div class="card">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT51FARjELE0XmkFMaf-u08Y56maF_P0dP0hQ&s" alt="">
+<div class="nome">Martelete (Cabo) </div>
+<div class="botoes">
+<button class="solicitar" data-equip="Furadeira">Solicitar</button>
+<button class="devolver" data-equip="Furadeira">Devolver</button>
+</div>
+</div>
+
+<!-- ITEM 7 -->
+<div class="card">
+<img src="" alt="">
+<div class="nome">Martelete (Cabo) </div>
+<div class="botoes">
+<button class="solicitar" data-equip="Furadeira">Solicitar</button>
+<button class="devolver" data-equip="Furadeira">Devolver</button>
+</div>
+</div>
+
+<!-- ITEM 7 -->
+<div class="card">
+<img src="" alt="">
+<div class="nome">Martelete (Cabo) </div>
+<div class="botoes">
+<button class="solicitar" data-equip="Furadeira">Solicitar</button>
+<button class="devolver" data-equip="Furadeira">Devolver</button>
+</div>
+</div>
+
+
+<!-- ITEM 7 -->
+<div class="card">
+<img src="" alt="">
+<div class="nome">Martelete (Cabo) </div>
+<div class="botoes">
+<button class="solicitar" data-equip="Furadeira">Solicitar</button>
+<button class="devolver" data-equip="Furadeira">Devolver</button>
+</div>
 </div>
 
 </div>
@@ -146,9 +216,3 @@ Sistema de Controle de Equipamentos
 
 </body>
 </html>
-
-
-
-
-
-

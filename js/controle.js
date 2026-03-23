@@ -36,24 +36,40 @@ onAuthStateChanged(auth, (user) => {
       let dataDevolucao = "";
       let statusFormatado = "";
 
+      // 📅 DATA SOLICITAÇÃO
       if (dados.dataHoraSolicitacao) {
         dataSolicitacao = dados.dataHoraSolicitacao
           .toDate()
           .toLocaleString();
       }
 
+      // 📅 DATA DEVOLUÇÃO
       if (dados.dataHoraDevolucao) {
         dataDevolucao = dados.dataHoraDevolucao
           .toDate()
           .toLocaleString();
       }
 
-      if (dados.status === "solicitado") {
-        statusFormatado = "🟢 Em uso";
-      }
+      // 🔥 STATUS NOVO PADRÃO
+      switch (dados.status) {
+        case "pendente":
+          statusFormatado = "🟡 Aguardando aprovação";
+          break;
 
-      if (dados.status === "devolvido") {
-        statusFormatado = "🔵 Devolvido";
+        case "aprovado":
+          statusFormatado = "🟢 Em uso";
+          break;
+
+        case "recusado":
+          statusFormatado = "❌ Recusado";
+          break;
+
+        case "devolvido":
+          statusFormatado = "🔵 Devolvido";
+          break;
+
+        default:
+          statusFormatado = dados.status;
       }
 
       const linha = `
@@ -61,7 +77,7 @@ onAuthStateChanged(auth, (user) => {
           <td>${dados.usuario}</td>
           <td>${dados.equipamento}</td>
           <td>${dataSolicitacao}</td>
-          <td>${dataDevolucao}</td>
+          <td>${dataDevolucao || "-"}</td>
           <td>${statusFormatado}</td>
         </tr>
       `;

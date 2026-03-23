@@ -24,3 +24,16 @@ onAuthStateChanged(auth, (user) => {
     window.location.href = "login.html";
   }
 });
+
+const form = document.getElementById("formLogin");
+
+form.addEventListener("submit", function(event) {
+  event.preventDefault(); // evita recarregar a página
+
+  const email = document.getElementById("email").value;
+  const senha = document.getElementById("senha").value;
+
+  console.log("Login:", email, senha);
+
+  // aqui você chama sua função de login
+});
