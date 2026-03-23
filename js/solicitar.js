@@ -20,8 +20,11 @@ onAuthStateChanged(auth, (user) => {
     return;
   }
 
+  // 🔥 CHAMA AO CARREGAR
+  atualizarStatusCards();
+
   // ================================
-  // 📤 SOLICITAR (AGORA FUNCIONA NOS CARDS)
+  // 📤 SOLICITAR
   // ================================
   const botoesSolicitar = document.querySelectorAll(".solicitar");
 
@@ -33,7 +36,6 @@ onAuthStateChanged(auth, (user) => {
 
       try {
 
-        // 🔥 verifica se já está em uso
         const q = query(
           collection(db, "solicitacoes_ferramentas"),
           where("equipamento", "==", equipamento),
@@ -60,6 +62,9 @@ onAuthStateChanged(auth, (user) => {
 
         alert("Equipamento solicitado com sucesso!");
 
+        // 🔥 ATUALIZA STATUS
+        atualizarStatusCards();
+
       } catch (error) {
         alert("Erro: " + error.message);
       }
@@ -70,7 +75,7 @@ onAuthStateChanged(auth, (user) => {
 
 
   // ================================
-  // 📥 DEVOLVER (AGORA FUNCIONA NOS CARDS)
+  // 📥 DEVOLVER
   // ================================
   const botoesDevolver = document.querySelectorAll(".devolver");
 
@@ -84,7 +89,7 @@ onAuthStateChanged(auth, (user) => {
 
         const q = query(
           collection(db, "solicitacoes_ferramentas"),
-          where("uid", "==", user.uid), // 🔥 só dono
+          where("uid", "==", user.uid),
           where("equipamento", "==", equipamento),
           where("status", "==", "em_uso")
         );
@@ -107,6 +112,9 @@ onAuthStateChanged(auth, (user) => {
 
         alert("Equipamento devolvido com sucesso!");
 
+        // 🔥 ATUALIZA STATUS
+        atualizarStatusCards();
+
       } catch (error) {
         alert("Erro ao devolver: " + error.message);
       }
@@ -116,3 +124,48 @@ onAuthStateChanged(auth, (user) => {
   });
 
 });
+
+
+// ================================
+// 🔄 ATUALIZAR STATUS DOS CARDS
+// ================================
+async function atualizarStatusCards() {
+
+  const q = query(
+    collection(db, "solicitacoes_ferramentas"),
+    where("status", "==", "em_uso")
+  );
+
+  const snapshot = await getDocs(q);
+
+  let equipamentosEmUso = {};
+
+  snapshot.forEach(doc => {
+    const dados = doc.data();
+    equipamentosEmUso[dados.equipamento] = dados.usuario;
+  });
+
+  const cards = document.querySelectorAll(".card");
+
+  cards.forEach(card => {
+
+    const nome = card.querySelector(".nome").innerText;
+    const statusDiv = card.querySelector(".status");
+
+    if (!statusDiv) return; // 🔥 evita erro
+
+    if (equipamentosEmUso[nome]) {
+
+      statusDiv.innerHTML = `🔴 Em uso por ${equipamentosEmUso[nome]}`;
+      statusDiv.className = "status em-uso";
+
+    } else {
+
+      statusDiv.innerHTML = `🟢 Disponível`;
+      statusDiv.className = "status disponivel";
+
+    }
+
+  });
+
+}
