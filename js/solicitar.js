@@ -13,6 +13,13 @@ import {
 import { onAuthStateChanged } 
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+// 🔥 ADMINS
+const ADMINS = [
+  "almoxarifadoredecom@gmail.com",
+  "tallysson@redecom.net.br",
+  "admin@gmail.com"
+];
+
 onAuthStateChanged(auth, (user) => {
 
   if (!user) {
@@ -20,7 +27,6 @@ onAuthStateChanged(auth, (user) => {
     return;
   }
 
-  // 🔥 CHAMA AO CARREGAR
   atualizarStatusCards();
 
   // ================================
@@ -61,8 +67,6 @@ onAuthStateChanged(auth, (user) => {
         });
 
         alert("Equipamento solicitado com sucesso!");
-
-        // 🔥 ATUALIZA STATUS
         atualizarStatusCards();
 
       } catch (error) {
@@ -87,17 +91,33 @@ onAuthStateChanged(auth, (user) => {
 
       try {
 
-        const q = query(
-          collection(db, "solicitacoes_ferramentas"),
-          where("uid", "==", user.uid),
-          where("equipamento", "==", equipamento),
-          where("status", "==", "em_uso")
-        );
+        let q;
+
+        // 🔥 SE FOR ADMIN → PODE DEVOLVER QUALQUER
+        if (ADMINS.includes(user.email)) {
+
+          q = query(
+            collection(db, "solicitacoes_ferramentas"),
+            where("equipamento", "==", equipamento),
+            where("status", "==", "em_uso")
+          );
+
+        } else {
+
+          // 🔒 USUÁRIO NORMAL
+          q = query(
+            collection(db, "solicitacoes_ferramentas"),
+            where("uid", "==", user.uid),
+            where("equipamento", "==", equipamento),
+            where("status", "==", "em_uso")
+          );
+
+        }
 
         const querySnapshot = await getDocs(q);
 
         if (querySnapshot.empty) {
-          alert("Você não possui esse equipamento.");
+          alert("Nenhuma solicitação encontrada para devolução.");
           return;
         }
 
@@ -111,8 +131,6 @@ onAuthStateChanged(auth, (user) => {
         }
 
         alert("Equipamento devolvido com sucesso!");
-
-        // 🔥 ATUALIZA STATUS
         atualizarStatusCards();
 
       } catch (error) {
@@ -127,7 +145,7 @@ onAuthStateChanged(auth, (user) => {
 
 
 // ================================
-// 🔄 ATUALIZAR STATUS DOS CARDS
+// 🔄 STATUS DOS CARDS
 // ================================
 async function atualizarStatusCards() {
 
@@ -152,7 +170,7 @@ async function atualizarStatusCards() {
     const nome = card.dataset.equip;
     const statusDiv = card.querySelector(".status");
 
-    if (!statusDiv) return; // 🔥 evita erro
+    if (!statusDiv) return;
 
     if (equipamentosEmUso[nome]) {
 
