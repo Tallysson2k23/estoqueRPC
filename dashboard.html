@@ -43,12 +43,12 @@ body{
   background:#c0392b;
 }
 
-/* ALERTA */
+/* 🔥 ALERTA */
 .alerta{
   width:90%;
   max-width:900px;
   margin:20px auto;
-  background:#f39c12;
+  background:#e67e22;
   color:white;
   padding:15px;
   border-radius:10px;
@@ -57,6 +57,7 @@ body{
   display:none;
 }
 
+/* CONTEÚDO */
 .container{
   padding:40px;
   display:flex;
@@ -85,10 +86,6 @@ body{
   transform:translateY(-5px);
 }
 
-.card h3{
-  margin-top:10px;
-}
-
 .icon{
   font-size:40px;
 }
@@ -110,20 +107,19 @@ body{
 
     <a class="card" href="solicitar.html">
       <div class="icon">🧰</div>
-      <h3>Solicitar e Devolução Equipamento</h3>
-      <p>....................</p>
+      <h3>Solicitar / Devolver</h3>
+      <p>Gerenciar equipamentos</p>
     </a>
 
     <a class="card" href="controle.html">
       <div class="icon">📋</div>
       <h3>Controle</h3>
-      <p>....................</p>
+      <p>Visualizar registros</p>
     </a>
 
   </div>
 </div>
 
-<!-- 🔥 SCRIPT MODERNO (V10) -->
 <script type="module">
 
 import { auth, db } from "./firebase-config.js";
@@ -138,14 +134,14 @@ import {
 import { onAuthStateChanged, signOut } 
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-// logout correto
+// logout
 window.logout = function() {
   signOut(auth).then(() => {
     window.location.href = "login.html";
   });
 };
 
-// verifica usuário e busca pendências
+// 🔥 VERIFICA EQUIPAMENTOS DO USUÁRIO
 onAuthStateChanged(auth, async (user) => {
 
   if (!user) {
@@ -158,7 +154,7 @@ onAuthStateChanged(auth, async (user) => {
     const q = query(
       collection(db, "solicitacoes_ferramentas"),
       where("uid", "==", user.uid),
-      where("status", "==", "solicitado")
+      where("status", "==", "em_uso") // 🔥 CORRETO
     );
 
     const snapshot = await getDocs(q);
@@ -167,20 +163,22 @@ onAuthStateChanged(auth, async (user) => {
 
     if (!snapshot.empty) {
 
-      let equipamentos = [];
+      let equipamentos = new Set();
 
       snapshot.forEach(doc => {
         const dados = doc.data();
-        equipamentos.push(dados.equipamento);
+        equipamentos.add(dados.equipamento);
       });
 
       alerta.style.display = "block";
       alerta.innerText =
-        "⚠️ Você possui equipamento(s) aguardando devolução: " +
-        equipamentos.join(", ");
+        "⚠️ Você está com os seguintes equipamentos: " +
+        [...equipamentos].join(", ");
 
     } else {
+
       alerta.style.display = "none";
+
     }
 
   } catch (error) {
