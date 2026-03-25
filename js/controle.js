@@ -17,25 +17,29 @@ const filtroData = document.getElementById("filtroData");
 
 let usuarioLogado = null;
 
-// 🔥 defina seu admin aqui
+// 🔥 ADMINS
 const ADMINS = [
   "almoxarifadoredecom@gmail.com",
   "tallysson@redecom.net.br",
   "admin@gmail.com"
 ];
 
-// data hoje
+// 🔥 DATA HOJE
 function hojeFormatado() {
   return new Date().toISOString().split("T")[0];
 }
 
 filtroData.value = hojeFormatado();
 
+// 🔐 AUTH
 onAuthStateChanged(auth, (user) => {
   usuarioLogado = user;
   carregarSolicitacoes(filtroData.value);
 });
 
+// ================================
+// 🔄 CARREGAR SOLICITAÇÕES
+// ================================
 async function carregarSolicitacoes(dataSelecionada) {
 
   tabela.innerHTML = "";
@@ -58,6 +62,7 @@ async function carregarSolicitacoes(dataSelecionada) {
     const dataSolicStr = dataSolic?.toISOString().split("T")[0];
     const dataDevStr = dataDev?.toISOString().split("T")[0];
 
+    // 🔥 FILTRO POR DATA
     if (dataSolicStr !== dataSelecionada && dataDevStr !== dataSelecionada) {
       return;
     }
@@ -68,18 +73,19 @@ async function carregarSolicitacoes(dataSelecionada) {
 
     const tr = document.createElement("tr");
 
-    // 🔥 campo observação
+    // ================================
+    // 🔥 OBSERVAÇÃO
+    // ================================
     let campoObservacao = "";
 
-   if (ADMINS.includes(usuarioLogado?.email)){
+    if (ADMINS.includes(usuarioLogado?.email)) {
 
       campoObservacao = `
-        <input type="text" 
-          value="${dados.observacao || ""}" 
-          data-id="${id}"
+        <textarea 
           class="obsInput"
+          data-id="${id}"
           placeholder="Adicionar observação"
-        >
+        >${dados.observacao || ""}</textarea>
       `;
 
     } else {
@@ -101,13 +107,18 @@ async function carregarSolicitacoes(dataSelecionada) {
 
   });
 
-  // 🔥 salvar observação
-  document.querySelectorAll(".obsInput").forEach(input => {
+  // ================================
+  // 💾 SALVAR OBSERVAÇÃO
+  // ================================
+  document.querySelectorAll(".obsInput").forEach(textarea => {
 
-    input.addEventListener("change", async () => {
+    // 🔥 ajusta altura ao carregar
+    autoResize(textarea);
 
-      const id = input.dataset.id;
-      const texto = input.value;
+    textarea.addEventListener("change", async () => {
+
+      const id = textarea.dataset.id;
+      const texto = textarea.value;
 
       await updateDoc(doc(db, "solicitacoes_ferramentas", id), {
         observacao: texto
@@ -119,7 +130,24 @@ async function carregarSolicitacoes(dataSelecionada) {
 
 }
 
-// troca data
+// ================================
+// 📅 TROCAR DATA
+// ================================
 filtroData.addEventListener("change", () => {
   carregarSolicitacoes(filtroData.value);
+});
+
+// ================================
+// 🔥 AUTO RESIZE TEXTAREA
+// ================================
+function autoResize(textarea) {
+  textarea.style.height = "auto";
+  textarea.style.height = textarea.scrollHeight + "px";
+}
+
+// 🔥 DIGITANDO → EXPANDE
+document.addEventListener("input", function(e) {
+  if (e.target.classList.contains("obsInput")) {
+    autoResize(e.target);
+  }
 });
