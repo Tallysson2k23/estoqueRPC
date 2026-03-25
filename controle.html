@@ -29,20 +29,12 @@ body{
   box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 
-.header h2{
-  color:#333;
-}
-
 .voltar{
   padding:8px 16px;
   background:#2a5298;
   color:white;
   text-decoration:none;
   border-radius:6px;
-}
-
-.voltar:hover{
-  background:#1e3c72;
 }
 
 /* CONTAINER */
@@ -54,11 +46,26 @@ body{
 }
 
 .card{
-  width:900px;
+  width:1000px;
   background:white;
   padding:30px;
   border-radius:12px;
   box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* FILTRO DATA */
+
+.filtro{
+  margin-bottom:20px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+input[type="date"]{
+  padding:8px;
+  border-radius:6px;
+  border:1px solid #ccc;
 }
 
 /* TABELA */
@@ -75,7 +82,6 @@ thead{
 
 th, td{
   padding:12px;
-  text-align:left;
 }
 
 tbody tr{
@@ -84,10 +90,6 @@ tbody tr{
 
 tbody tr:hover{
   background:#f5f5f5;
-}
-
-th{
-  font-weight:bold;
 }
 
 </style>
@@ -105,8 +107,12 @@ th{
 
 <div class="card">
 
-<table>
+<div class="filtro">
+<label>Selecionar data:</label>
+<input type="date" id="filtroData">
+</div>
 
+<table>
 <thead>
 <tr>
 <th>Usuário</th>
@@ -114,6 +120,7 @@ th{
 <th>Solicitado em</th>
 <th>Devolvido em</th>
 <th>Status</th>
+<th>Observação</th>
 </tr>
 </thead>
 
