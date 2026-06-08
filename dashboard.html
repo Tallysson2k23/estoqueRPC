@@ -15,33 +15,102 @@
 
 body{
   min-height:100vh;
-  background: linear-gradient(135deg,#1e3c72,#2a5298);
+  background: linear-gradient(135deg,#8e2c16,#c65d1e,#f39c12);
+  position:relative;
+  overflow-x:hidden;
+}
+
+/* Bandeirinhas São João */
+body::before{
+  content:"";
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:90px;
+  pointer-events:none;
+  z-index:0;
+  background-image:
+  repeating-linear-gradient(
+    -45deg,
+    #e74c3c 0 20px,
+    #f1c40f 20px 40px,
+    #3498db 40px 60px,
+    #2ecc71 60px 80px
+  );
+  clip-path:polygon(
+    0 0,
+    100% 0,
+    100% 40%,
+    97% 100%,
+    94% 40%,
+    91% 100%,
+    88% 40%,
+    85% 100%,
+    82% 40%,
+    79% 100%,
+    76% 40%,
+    73% 100%,
+    70% 40%,
+    67% 100%,
+    64% 40%,
+    61% 100%,
+    58% 40%,
+    55% 100%,
+    52% 40%,
+    49% 100%,
+    46% 40%,
+    43% 100%,
+    40% 40%,
+    37% 100%,
+    34% 40%,
+    31% 100%,
+    28% 40%,
+    25% 100%,
+    22% 40%,
+    19% 100%,
+    16% 40%,
+    13% 100%,
+    10% 40%,
+    7% 100%,
+    4% 40%,
+    1% 100%,
+    0 40%
+  );
 }
 
 .header{
-  background:white;
+  background:rgba(255,255,255,0.95);
+  backdrop-filter:blur(8px);
   padding:20px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  box-shadow:0 5px 20px rgba(0,0,0,0.12);
+  position:relative;
+  z-index:1;
+  border-bottom:3px solid #f39c12;
 }
 
 .header h2{
-  color:#333;
+  color:#6d2d13;
+  font-weight:700;
 }
 
 .logout{
-  padding:8px 16px;
+  padding:10px 18px;
   border:none;
-  border-radius:6px;
+  border-radius:8px;
   background:#e74c3c;
   color:white;
   cursor:pointer;
+  transition:.25s;
+  font-weight:bold;
 }
 
 .logout:hover{
   background:#c0392b;
+  transform:translateY(-2px);
 }
 
 /* 🔥 ALERTA */
@@ -49,20 +118,25 @@ body{
   width:90%;
   max-width:900px;
   margin:20px auto;
-  background:#e67e22;
+  background:linear-gradient(135deg,#e67e22,#d35400);
   color:white;
   padding:15px;
-  border-radius:10px;
+  border-radius:12px;
   text-align:center;
   font-weight:bold;
   display:none;
+  box-shadow:0 8px 20px rgba(0,0,0,0.15);
+  position:relative;
+  z-index:1;
 }
 
 /* CONTEÚDO */
 .container{
-  padding:40px;
+  padding:50px 40px 40px;
   display:flex;
   justify-content:center;
+  position:relative;
+  z-index:1;
 }
 
 .cards{
@@ -73,24 +147,58 @@ body{
 }
 
 .card{
-  background:white;
+  background:rgba(255,255,255,0.97);
   padding:30px;
-  border-radius:12px;
+  border-radius:18px;
   text-align:center;
-  box-shadow:0 10px 25px rgba(0,0,0,0.15);
-  transition:0.2s;
+  box-shadow:0 12px 30px rgba(0,0,0,0.15);
+  transition:.25s;
   text-decoration:none;
   color:#333;
+  border:2px solid transparent;
 }
 
 .card:hover{
-  transform:translateY(-5px);
+  transform:translateY(-6px);
+  border-color:#f39c12;
+  box-shadow:0 18px 35px rgba(0,0,0,0.2);
 }
 
 .icon{
-  font-size:40px;
+  font-size:42px;
+  margin-bottom:10px;
+}
+
+/* Detalhe junino sutil */
+.card:nth-child(odd){
+  border-bottom:4px solid #e74c3c;
+}
+
+.card:nth-child(even){
+  border-bottom:4px solid #f1c40f;
+}
+
+/* Responsivo */
+@media(max-width:768px){
+  .container{
+    padding:40px 20px;
+  }
+
+  .header{
+    padding:15px;
+  }
+
+  .header h2{
+    font-size:18px;
+  }
+
+  .card{
+    padding:25px;
+  }
 }
 </style>
+
+
 </head>
 
 <body>
@@ -107,15 +215,21 @@ body{
   <div class="cards">
 
     <a class="card" href="solicitar.html">
-      <div class="icon">🧰</div>
+      <div class="icon">🔥</div>
       <h3>Solicitar / Devolver</h3>
       <p>Gerenciar equipamentos</p>
     </a>
 
     <a class="card" href="controle.html">
-      <div class="icon">📋</div>
+      <div class="icon">🎇</div>
       <h3>Controle</h3>
       <p>Visualizar registros</p>
+    </a>
+
+        <a class="card" href="nova pagina aqui">
+      <div class="icon">🕳</div>
+      <h3>Nova função</h3>
+      <p>Em breve</p>
     </a>
 
   </div>
