@@ -6,185 +6,218 @@
 <title>Controle de Solicitações</title>
 
 <style>
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial, Helvetica, sans-serif;
+:root{
+    --bg:#090b14;
+    --card:rgba(20,20,32,.82);
+    --pink:#ff3cac;
+    --purple:#784ba0;
+    --orange:#ff9a3c;
+    --yellow:#ffd166;
+    --text:#fff;
+    --text2:#b8bfd3;
+    --border:rgba(255,255,255,.08);
+    --shadow:0 25px 60px rgba(0,0,0,.55),0 0 40px rgba(255,60,172,.08);
+    --grad:linear-gradient(135deg,var(--pink),#ff7a18);
 }
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Segoe UI",Arial,sans-serif}
+html{scroll-behavior:smooth}
 
 body{
-  min-height:100vh;
-  background:
-    radial-gradient(circle at top right, rgba(255,193,7,.12), transparent 250px),
-    radial-gradient(circle at bottom left, rgba(255,193,7,.08), transparent 250px),
-    linear-gradient(135deg,#1e3c72,#2a5298);
+    min-height:100vh;
+    color:var(--text);
+    background:
+        radial-gradient(circle at top left,rgba(255,60,172,.22),transparent 420px),
+        radial-gradient(circle at bottom right,rgba(255,154,60,.18),transparent 420px),
+        radial-gradient(circle at center,rgba(120,75,160,.15),transparent 650px),
+        linear-gradient(135deg,#05050a,#0c1022,#16122b);
 }
 
-/* HEADER */
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:#0d1020}
+::-webkit-scrollbar-thumb{background:var(--grad);border-radius:20px}
 
 .header{
-  background:rgba(255,255,255,.97);
-  padding:20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  box-shadow:0 6px 20px rgba(0,0,0,.08);
-  border-bottom:3px solid #f4b400;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:22px 40px;
+    background:rgba(10,10,18,.75);
+    backdrop-filter:blur(25px);
+    border-bottom:2px solid rgba(255,60,172,.25);
+    box-shadow:0 15px 35px rgba(0,0,0,.45);
+    animation:fade .7s ease;
 }
 
 .header h2{
-  color:#1e3c72;
+    font-size:28px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    text-shadow:0 0 10px var(--pink),0 0 25px rgba(255,60,172,.45);
 }
 
-/* BOTÃO VOLTAR */
-
 .voltar{
-  padding:8px 16px;
-  background:#2a5298;
-  color:white;
-  text-decoration:none;
-  border-radius:8px;
-  transition:.2s;
-  font-weight:600;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:12px 24px;
+    color:#fff;
+    text-decoration:none;
+    font-weight:700;
+    border-radius:14px;
+    background:var(--grad);
+    box-shadow:0 0 25px rgba(255,60,172,.35);
+    transition:.3s;
+    animation:fade .7s ease;
 }
 
 .voltar:hover{
-  background:#1e3c72;
-  transform:translateY(-1px);
+    transform:translateY(-4px);
+    box-shadow:0 0 40px rgba(255,60,172,.7);
 }
-
-/* CONTAINER */
 
 .container{
-  padding:40px;
-  display:flex;
-  justify-content:center;
+    display:flex;
+    justify-content:center;
+    padding:45px;
 }
-
-/* CARD */
 
 .card{
-  width:1000px;
-  background:white;
-  padding:30px;
-  border-radius:16px;
-  box-shadow:0 15px 35px rgba(0,0,0,.15);
-  border-top:4px solid #f4b400;
+    width:1050px;
+    position:relative;
+    overflow:hidden;
+    padding:35px;
+    border-radius:28px;
+    background:var(--card);
+    backdrop-filter:blur(22px);
+    border:1px solid var(--border);
+    box-shadow:var(--shadow);
+    animation:fade .7s ease,glow 6s ease-in-out infinite;
 }
 
-/* FILTRO DATA */
+.card::before{
+    content:"";
+    position:absolute;
+    inset:0 0 auto;
+    height:4px;
+    background:linear-gradient(90deg,var(--pink),var(--orange),var(--yellow),var(--purple));
+}
+
+.card::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:inherit;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
+    pointer-events:none;
+}
 
 .filtro{
-  margin-bottom:20px;
-  display:flex;
-  gap:10px;
-  align-items:center;
-  flex-wrap:wrap;
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-bottom:25px;
 }
 
 .filtro label{
-  font-weight:600;
-  color:#444;
+    color:var(--text2);
+    font-weight:600;
 }
 
-input[type="date"]{
-  padding:8px 12px;
-  border-radius:8px;
-  border:1px solid #d6d6d6;
-  outline:none;
-  transition:.2s;
+input[type=date],
+textarea{
+    width:100%;
+    background:#171722;
+    color:#fff;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:11px 14px;
+    transition:.3s;
 }
 
-input[type="date"]:focus{
-  border-color:#f4b400;
-  box-shadow:0 0 0 3px rgba(244,180,0,.15);
+input[type=date]{
+    width:auto;
 }
 
-/* TABELA */
+textarea{
+    min-height:45px;
+    resize:none;
+    overflow:hidden;
+    font-size:14px;
+}
+
+input[type=date]:focus,
+textarea:focus{
+    outline:none;
+    border-color:var(--pink);
+    box-shadow:0 0 18px rgba(255,60,172,.35);
+}
 
 table{
-  width:100%;
-  border-collapse:collapse;
+    width:100%;
+    border-collapse:collapse;
+    border-radius:16px;
+    overflow:hidden;
 }
 
 thead{
-  background:linear-gradient(135deg,#1e3c72,#2a5298);
-  color:white;
+    background:var(--grad);
 }
 
 th{
-  padding:14px 12px;
-  text-align:left;
-  font-weight:600;
+    padding:18px;
+    text-transform:uppercase;
+    font-size:14px;
+    letter-spacing:.6px;
 }
 
 td{
-  padding:12px;
+    padding:16px;
+    color:#d9e9ff;
+    border-bottom:1px solid rgba(255,255,255,.06);
 }
 
 tbody tr{
-  border-bottom:1px solid #e8e8e8;
-  transition:.15s;
+    transition:.3s;
+}
+
+tbody tr:nth-child(even){
+    background:rgba(255,255,255,.025);
 }
 
 tbody tr:hover{
-  background:#faf8f1;
+    background:rgba(255,60,172,.1);
+    transform:scale(1.002);
 }
 
-/* TEXTAREA */
-
-textarea{
-  width:100%;
-  min-height:40px;
-  resize:none;
-  padding:8px;
-  border-radius:8px;
-  border:1px solid #d8d8d8;
-  font-family:Arial, Helvetica, sans-serif;
-  font-size:14px;
-  overflow:hidden;
-  transition:.2s;
+@keyframes fade{
+    from{opacity:0;transform:translateY(20px)}
+    to{opacity:1;transform:none}
 }
 
-textarea:focus{
-  outline:none;
-  border-color:#f4b400;
-  box-shadow:0 0 0 3px rgba(244,180,0,.15);
+@keyframes glow{
+    0%,100%{box-shadow:var(--shadow)}
+    50%{box-shadow:0 25px 60px rgba(0,0,0,.55),0 0 50px rgba(255,60,172,.28)}
 }
 
-/* Detalhe sutil de São João */
-
-.card::before{
-  content:"✨";
-  display:block;
-  margin-bottom:15px;
-  color:#d97706;
-  font-size:13px;
-  font-weight:700;
-  letter-spacing:.5px;
+@media(max-width:900px){
+    .container{padding:20px}
+    .card{width:100%;padding:20px}
+    .header{
+        padding:18px;
+        flex-direction:column;
+        gap:15px;
+        text-align:center;
+    }
+    .header h2{font-size:22px}
+    th,td{padding:12px}
+    table{font-size:13px}
 }
-
-/* Responsivo */
-
-@media(max-width:768px){
-
-  .container{
-    padding:20px;
-  }
-
-  .card{
-    padding:20px;
-  }
-
-  .header{
-    padding:15px;
-  }
-
-}
-
 </style>
+
+
 </head>
 
 <body>
