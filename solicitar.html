@@ -158,6 +158,31 @@ button{
 
 }
 
+.voltar {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 140px;
+    background: var(--grad);
+    box-shadow: 0 0 15px rgb(253, 4, 4);
+    transition: .3s;
+    animation: fade .7s ease;
+}
+
+.voltar:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 40px rgba(255, 60, 172, .7);
+}
+
 </style>
 
 
@@ -165,7 +190,15 @@ button{
 </head>
 
 <body>
-<h2>Equipamentos</h2>
+
+<div class="header">
+  <h2>Controle de Solicitações</h2>
+  <a class="voltar" href="dashboard.html">Voltar</a>
+</div>
+
+
+
+
 
 <div class="grid">
 
